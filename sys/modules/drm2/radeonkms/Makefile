@@ -1,5 +1,7 @@
 # $FreeBSD$
 
+.include <bsd.own.mk>
+
 .PATH:	${.CURDIR}/../../../dev/drm2/radeon
 
 KMOD	= radeonkms
@@ -94,14 +96,18 @@ SRCS	+=								\
 	opt_acpi.h							\
 	opt_compat.h							\
 	opt_drm.h							\
+	opt_syscons.h							\
 	acpi_if.h							\
 	bus_if.h							\
+	fb_if.h								\
 	device_if.h							\
 	iicbb_if.h							\
 	iicbus_if.h							\
 	pci_if.h
 
-CFLAGS  += -I${.CURDIR}/../../../dev/drm2/radeon			\
-	   -fms-extensions
+CFLAGS  += -I${.CURDIR}/../../../dev/drm2/radeon
+.if ${COMPILER_TYPE} == "gcc"
+CFLAGS	+= -fms-extensions
+.endif
 
 .include <bsd.kmod.mk>
